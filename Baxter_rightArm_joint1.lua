@@ -188,18 +188,18 @@ function sysCall_threadmain()
     jh={-1,-1,-1,-1,-1,-1,-1}
     jt={-1,-1,-1,-1,-1,-1,-1}
     for i=1,7,1 do
-        jh[i]=sim.getObjectHandle('Baxter_leftArm_joint'..i)
+        jh[i]=sim.getObjectHandle('Baxter_rightArm_joint'..i)
         jt[i]=sim.getJointType(jh[i])
     end
     baseHandle=sim.getObjectAssociatedWithScript(sim.handle_self)
     baxterBaseHandle=sim.getObjectHandle('Baxter')
-    ikGroup=sim.getIkGroupHandle('Baxter_leftArm')
-    ikTarget=sim.getObjectHandle('Baxter_leftArm_target')
-    target1=sim.getObjectHandle('Baxter_leftArm_mpTarget1')
+    ikGroup=sim.getIkGroupHandle('Baxter_rightArm')
+    ikTarget=sim.getObjectHandle('Baxter_rightArm_target')
+    target1=sim.getObjectHandle('Baxter_rightArm_mpTarget1')
     name=sim.getObjectName(baseHandle)
     suffix=sim.getNameSuffix(name)
 
-    signalName='BaxterLeftArmSignal'
+    signalName='BaxterRightArmSignal'
     if (suffix>=0) then
         signalName=signalName..'#'..suffix
     end
@@ -213,21 +213,20 @@ function sysCall_threadmain()
 
     -- Wait until the monitor told us to continue:
     setStageAndWaitForNext(0)
-    
+
     config={0,0,0,0,0,0,0}
     path,lengths=generateDirectPath(config,fkSteps)
     executeMotion(path,lengths,maxVel,maxAccel,maxJerk)
-    print('homel')
-
-    config={34.61*math.pi/180,12.3*math.pi/180,-84.7*math.pi/180,116.29*math.pi/180,13.94*math.pi/180,52.84*math.pi/180,89.03*math.pi/180}
+    print('homer')
+    config={-35.1*math.pi/180,28.74*math.pi/180,92.86*math.pi/180,116.5*math.pi/180,-34.26*math.pi/180,58.8*math.pi/180,-72.76*math.pi/180}
     path,lengths=generateDirectPath(config,fkSteps)
     executeMotion(path,lengths,maxVel,maxAccel,maxJerk)
-    print('targetl')
+    print('targetr')
     -- Wait until the monitor told us to continue:
     setStageAndWaitForNext(2)
 
     -- Move towards the other arm (with IK):
-    m=getShiftedMatrix(sim.getObjectMatrix(target1,-1),{0,-0.15,0},1,true)
+    m=getShiftedMatrix(sim.getObjectMatrix(target1,-1),{0,0.15,0},1,true)
     path,lengths=generateIkPath(m,ikSteps)
     executeMotion(path,lengths,maxVel,maxAccel,maxJerk)
 
@@ -235,7 +234,7 @@ function sysCall_threadmain()
     setStageAndWaitForNext(4)
 
     -- Move parallel with the other arm (with IK):
-    m=getShiftedMatrix(sim.getObjectMatrix(target1,-1),{0,0.15,0},1,true)
+    m=getShiftedMatrix(sim.getObjectMatrix(target1,-1),{0,0.45,0},1,true)
     path,lengths=generateIkPath(m,ikSteps)
     executeMotion(path,lengths,maxVel,maxAccel,maxJerk)
 
@@ -243,7 +242,7 @@ function sysCall_threadmain()
     setStageAndWaitForNext(6)
 
     -- Move parallel with the other arm (with IK):
-    m=getShiftedMatrix(sim.getObjectMatrix(target1,-1),{0,-0.45,0},1,true)
+    m=getShiftedMatrix(sim.getObjectMatrix(target1,-1),{0,-0.15,0},1,true)
     path,lengths=generateIkPath(m,ikSteps)
     executeMotion(path,lengths,maxVel,maxAccel,maxJerk)
 
@@ -251,7 +250,7 @@ function sysCall_threadmain()
     setStageAndWaitForNext(8)
 
     -- Move parallel with the other arm (with IK):
-    m=getShiftedMatrix(sim.getObjectMatrix(target1,-1),{0,-0.15,0},1,true)
+    m=getShiftedMatrix(sim.getObjectMatrix(target1,-1),{0,0.15,0},1,true)
     path,lengths=generateIkPath(m,ikSteps)
     executeMotion(path,lengths,maxVel,maxAccel,maxJerk)
 
@@ -259,7 +258,7 @@ function sysCall_threadmain()
     setStageAndWaitForNext(10)
 
     -- Move away from the other arm (with IK):
-    m=getShiftedMatrix(sim.getObjectMatrix(target1,-1),{0,0,0},1,true)
+    m=getShiftedMatrix(sim.getObjectMatrix(target1,-1),{0,0.0,0},1,true)
     path,lengths=generateIkPath(m,ikSteps)
     executeMotion(path,lengths,maxVel,maxAccel,maxJerk)
 
@@ -268,5 +267,3 @@ function sysCall_threadmain()
     path,lengths=generateDirectPath(config,fkSteps)
     executeMotion(path,lengths,maxVel,maxAccel,maxJerk)
 end
-
-
