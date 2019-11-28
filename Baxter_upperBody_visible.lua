@@ -1,4 +1,3 @@
---Takes to the start position
 waitForLeftArm=function(waitNumber,nextNumber)
     while true do
         stage=sim.getIntegerSignal(leftArmSignalName)
@@ -27,17 +26,15 @@ waitForLeftRight=function(waitNumber,nextNumber)
     while true do
         stager=sim.getIntegerSignal(rightArmSignalName)
         stagel=sim.getIntegerSignal(leftArmSignalName)
-print(stagel,stager)
+--print(stagel,stager)
 
         if (stager==waitNumber and stagel==waitNumber) then
             break
         end
-        --Uncommenting this gives non-synchronized motion between left and right arm
         --sim.switchThread() -- don't waste CPU time
     end
     sim.setIntegerSignal(rightArmSignalName,nextNumber)
     sim.setIntegerSignal(leftArmSignalName,nextNumber)
-print('what')
 end
 
 function sysCall_threadmain()
@@ -55,34 +52,25 @@ function sysCall_threadmain()
         rightArmSignalName=rightArmSignalName..'#'..suffix
     end
 
-    -- Tell the left arm to start movement:
-    --waitForLeftArm(0,1)
-
-    -- Move the head towards the left arm:
-    --sim.setJointTargetPosition(monitorJointHandle,30*math.pi/180)
-
-    -- Wait 7 seconds:
-    --sim.wait(7)
-
-    -- Tell the right arm to start movement:
-    --waitForRightArm(0,1)
-
-    -- Move the head towards the right arm:
-    --sim.setJointTargetPosition(monitorJointHandle,-30*math.pi/180)
-
-    -- Wait 5 seconds:
-    --sim.wait(5)
-
-    -- Wait until the left arm is done for the first part:
-    --waitForLeftArm(2,2)
-
-    -- Move the head towards the center:
-    --sim.setJointTargetPosition(monitorJointHandle,0*math.pi/180)
-
-    -- Wait until the right arm is done for the first part:
-    --waitForRightArm(2,2)
+    -- Come to home position
     waitForLeftRight(0,1)
-    print('a')
     waitForLeftRight(2,2)
-    print('b')
+
+    -- DO IK 
+    -- Now tell the two arms to move close to each other:
+    waitForLeftRight(2,3)
+    waitForLeftRight(4,4)
+    print('1')
+    waitForLeftRight(4,5)
+    waitForLeftRight(6,6)
+    print('2')
+    waitForLeftRight(6,7)
+    waitForLeftRight(8,8)
+    print('3')
+    waitForLeftRight(8,9)
+    waitForLeftRight(10,10)
+    print('4')
+    waitForLeftRight(10,11)
+    waitForLeftRight(10,11)
+    
 end
