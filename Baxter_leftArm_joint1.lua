@@ -254,7 +254,7 @@ function sysCall_threadmain()
     m=getShiftedMatrix(sim.getObjectMatrix(target1,-1),{0,-0.15,0},1,true)
     path,lengths=generateIkPath(m,ikSteps)
     executeMotion(path,lengths,maxVel,maxAccel,maxJerk)
-1
+
     -- Wait until the monitor told us to continue:
     setStageAndWaitForNext(10)
 
