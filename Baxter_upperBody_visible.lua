@@ -51,26 +51,11 @@ function sysCall_threadmain()
     if (suffix>=0) then
         rightArmSignalName=rightArmSignalName..'#'..suffix
     end
-
-    -- Come to home position
-    waitForLeftRight(0,1)
-    waitForLeftRight(2,2)
-
-    -- DO IK 
-    -- Now tell the two arms to move close to each other:
-    waitForLeftRight(2,3)
-    waitForLeftRight(4,4)
-    print('1')
-    waitForLeftRight(4,5)
-    waitForLeftRight(6,6)
-    print('2')
-    waitForLeftRight(6,7)
-    waitForLeftRight(8,8)
-    print('3')
-    waitForLeftRight(8,9)
-    waitForLeftRight(10,10)
-    print('4')
-    waitForLeftRight(10,11)
-    waitForLeftRight(10,11)
-    
+    end_ = 8
+    for i=0,end_,2 do 
+        waitForLeftRight(i,i+1)
+        waitForLeftRight(i+2,i+2) 
+        print(i)
+    end
+    waitForLeftRight(end_+2,end_+3)
 end
